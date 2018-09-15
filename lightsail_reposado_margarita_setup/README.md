@@ -1,9 +1,7 @@
 This script is designed to set up the following software on Ubuntu:
 
-Reposado: [https://github.com/wdas/reposado](https://github.com/wdas/reposado)
-Margarita: [https://github.com/jessepeterson/margarita
-](https://github.com/jessepeterson/margarita
-)
+* Reposado: [https://github.com/wdas/reposado](https://github.com/wdas/reposado)
+* Margarita: [https://github.com/jessepeterson/margarita](https://github.com/jessepeterson/margarita)
 
 Script has been tested and verified to work on Ubuntu 16.04 LTS.
 
