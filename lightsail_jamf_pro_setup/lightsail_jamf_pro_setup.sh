@@ -2,17 +2,18 @@
 
 # This script is designed to set up a new Jamf Pro server on Ubuntu.
 # 
-# Script has been tested and verified to work on Ubuntu 16.04 LTS
+# Script has been tested and verified to work on Ubuntu 18.04 LTS
 #
 # As part of its run, it performs the following actions:
 #
 # 1. Installs the following software:
 #
-#  OpenJDK 8
+#  OpenJDK 11
 #  nano
 #  wget
 #  zip
 #  unzip
+#  xmlstarlet
 #  MySQL 5.7
 #
 # 2. Configures MySQL 5.7 with a specified root password.
@@ -75,7 +76,7 @@ apt-get update -y
 
 # Install OpenJDK and other needed utilities
 
-apt-get install -y openjdk-8-jdk nano wget zip unzip
+apt-get install -y openjdk-11-jdk nano wget zip unzip xmlstarlet
 
 # Add the appropriate apt repo for MySQL 5.7
 
@@ -137,34 +138,29 @@ echo "Configuring Jamf Pro to use its MySQL database"
 
 # Back up the existing /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml file
 
-mv /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.bak
+database_xml_file="/usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml"
 
-# Create a new DataBase.xml file
+if [[ -f /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml ]]; then
+    sudo -u jamftomcat cp /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.bak
+fi
 
-cat > /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml << JamfProDatabase
-<?xml version="1.0" encoding="UTF-8"?>
-<DataBase>
-	<DataBaseType>mysql</DataBaseType>
-	<DataBaseDriver>org.mariadb.jdbc.Driver</DataBaseDriver>
-	<ServerName>$mysqlserveraddress</ServerName>
-	<ServerPort>$mysqlserverport</ServerPort>
-	<DataBaseName>$jamfpro_database_dbname</DataBaseName>
-	<DataBaseUser>$jamfpro_database_username</DataBaseUser>
-	<DataBasePassword>$jamfpro_database_password</DataBasePassword>
-	<MinPoolSize>5</MinPoolSize>
-	<MaxPoolSize>45</MaxPoolSize>
-	<MaxIdleTimeExcessConnectionsInMinutes>1</MaxIdleTimeExcessConnectionsInMinutes>
-	<MaxConnectionAgeInMinutes>5</MaxConnectionAgeInMinutes>
-	<NumHelperThreads>3</NumHelperThreads>
-	<InStatementBatchSize>1000</InStatementBatchSize>
-	<jdbcParameters>?characterEncoding=utf8&amp;useUnicode=true&amp;jdbcCompliantTruncation=false</jdbcParameters>
-</DataBase>
-JamfProDatabase
+# Use xmlstarlet to populate the correct values for the following attributes in /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml
+#
+# ServerName
+# ServerPort
+# DataBaseName
+# DataBaseUser
+# DataBasePassword
 
+sudo -u jamftomcat /usr/bin/xmlstarlet edit --inplace --update "DataBase/ServerName" --value "$mysqlserveraddress" "$database_xml_file"
+sudo -u jamftomcat /usr/bin/xmlstarlet edit --inplace --update "DataBase/ServerPort" --value "$mysqlserverport" "$database_xml_file"
+sudo -u jamftomcat /usr/bin/xmlstarlet edit --inplace --update "DataBase/DataBaseName" --value "$jamfpro_database_dbname" "$database_xml_file"
+sudo -u jamftomcat /usr/bin/xmlstarlet edit --inplace --update "DataBase/DataBaseUser" --value "$jamfpro_database_username" "$database_xml_file"
+sudo -u jamftomcat /usr/bin/xmlstarlet edit --inplace --update "DataBase/DataBasePassword" --value "$jamfpro_database_password" "$database_xml_file"
 
 # Fix permissions on /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml
 
-chown jamftomcat:jamftomcat /usr/local/jss/tomcat/webapps/ROOT/WEB-INF/xml/DataBase.xml
+chown jamftomcat:jamftomcat "$database_xml_file"
 
 # Start Tomcat
 

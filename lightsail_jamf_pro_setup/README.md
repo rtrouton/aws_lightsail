@@ -1,14 +1,15 @@
-This script is designed to set up a new Jamf Pro server on Ubuntu. Script has been tested and verified to work on Ubuntu 16.04 LTS
+This script is designed to set up a new Jamf Pro server on Ubuntu. Script has been tested and verified to work on Ubuntu 18.04 LTS
 
 As part of its run, it performs the following actions:
 
 1. Installs the following software:
 
-*  OpenJDK 8
+*  OpenJDK 11
 *  nano
 *  wget
 *  zip
 *  unzip
+*  xmlstarlet
 *  MySQL 5.7
 
 2. Configures MySQL 5.7 with a specified root password.
