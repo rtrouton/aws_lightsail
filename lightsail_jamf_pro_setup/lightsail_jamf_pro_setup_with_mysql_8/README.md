@@ -10,9 +10,9 @@ As part of its run, it performs the following actions:
 *  zip
 *  unzip
 *  xmlstarlet
-*  MySQL (the version of MySQL depends on the script used.)
+*  MySQL 8.x
 
-2. Configures MySQL with a specified root password.
+2. Configures MySQL 8.x with a specified root password.
 
 3. Sets up a new MySQL database for Jamf Pro with a specified
    database name, username and password.
@@ -28,8 +28,3 @@ As part of its run, it performs the following actions:
 8. Configures Jamf Pro to work with the newly-created MySQL database.
 
 9. Restarts Jamf Pro
-
-**MySQL versions installed**
-
-* MySQL 5.7: See the `lightsail_jamf_pro_setup_with_mysql_57` directory for the appropriate script.
-* MySQL 8.x: See the `lightsail_jamf_pro_setup_with_mysql_8` directory for the appropriate script.
