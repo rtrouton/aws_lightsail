@@ -2,7 +2,7 @@
 
 # This script is designed to set up a new Jamf Pro server on Ubuntu.
 # 
-# Script has been tested and verified to work on Ubuntu 18.04 LTS
+# Script has been tested and verified to work on Ubuntu 22.04.3 LTS
 #
 # As part of its run, it performs the following actions:
 #
@@ -81,10 +81,10 @@ apt-get install -y openjdk-11-jdk nano wget zip unzip xmlstarlet
 # Add the appropriate apt repo for MySQL 8.x
 
 echo "Adding MySQL apt repo to system"
-wget https://dev.mysql.com/get/mysql-apt-config_0.8.14-1_all.deb
-DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config_0.8.14-1_all.deb
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.28-1_all.deb
+DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config_0.8.28-1_all.deb
 apt-get update -q
-rm mysql-apt-config_0.8.14-1_all.deb
+rm mysql-apt-config_0.8.28-1_all.deb
 
 # Install and configure MySQL
 
