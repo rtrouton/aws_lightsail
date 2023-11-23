@@ -114,7 +114,7 @@ jamfpro_download_directory=/tmp/jamfpro-download
 
 mkdir -p "$jamfpro_download_directory"
 
-# Copy the Jamf Pro installer from the appropriate S3 bucket to the download directory
+# Copy the Jamf Pro installer from the download URL to the download directory
 
 echo "Downloading $jamfpro_download_filename from $jamfpro_download_url"
 
