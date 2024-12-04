@@ -4,7 +4,7 @@ As part of its run, it performs the following actions:
 
 1. Installs the following software:
 
-*  OpenJDK 11
+*  OpenJDK 21
 *  nano
 *  wget
 *  zip
