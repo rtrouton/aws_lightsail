@@ -8,7 +8,7 @@
 #
 # 1. Installs the following software:
 #
-#  OpenJDK 11
+#  OpenJDK 21
 #  nano
 #  wget
 #  zip
@@ -76,7 +76,7 @@ apt-get update -y
 
 # Install OpenJDK and other needed utilities
 
-apt-get install -y openjdk-11-jdk nano wget zip unzip xmlstarlet
+apt-get install -y openjdk-21-jdk nano wget zip unzip xmlstarlet
 
 # Add the appropriate apt repo for MySQL 8.x
 
