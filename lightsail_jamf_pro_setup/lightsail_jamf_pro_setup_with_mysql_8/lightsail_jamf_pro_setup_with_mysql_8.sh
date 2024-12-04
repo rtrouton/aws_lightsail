@@ -134,7 +134,7 @@ yes | "$jamfpro_download_directory/jamfproinstaller.run"
 
 echo "Stopping Jamf Pro"
 
-systemctl stop jamf.tomcat8
+systemctl stop jamf.tomcat
 
 echo "Configuring Jamf Pro to use its MySQL database"
 
@@ -168,7 +168,7 @@ chown jamftomcat:jamftomcat "$database_xml_file"
 
 echo "Starting Jamf Pro"
 
-systemctl start jamf.tomcat8
+systemctl start jamf.tomcat
 
 # Remove the download directory
 
